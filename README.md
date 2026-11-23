@@ -4,6 +4,11 @@ Open-source MCP server and CLI for [ChartDuck](https://chartduck.com) — chart 
 extraction from scientific figures and document pages. The extraction engine runs on
 the hosted service; this repository is the thin client (MCP + CLI + Python SDK).
 
+> **Status: pre-release.** Version 0.1.0 reserves the package name; the hosted API is
+> not publicly available yet, so the client cannot reach a live service. The contract,
+> code and error semantics below are implemented and tested against a mock and a local
+> engine.
+
 ## What it does
 
 Given a chart image (or a PDF page), return structured data per panel:
@@ -42,15 +47,16 @@ Measured on public ICPR2022-style documents (unseen distribution):
 - Axis titles are beta: x-axis content accuracy 91.7%, y-axis 76.9% — not covered by any
   support commitment.
 
-Full benchmark methodology: <https://chartduck.com/benchmarks>.
+Full benchmark methodology: <https://chartduck.com/benchmarks> (site launch pending).
 
 ## Install
 
 Requires Python 3.10+.
 
 ```bash
-# not on PyPI yet — install from source
-git clone https://github.com/<org>/chartduck-mcp && cd chartduck-mcp && pip install -e .
+pip install chartduck-mcp          # 0.1.0: name reservation, no live API yet
+# or from source
+git clone https://github.com/MoDongla/chartduck-mcp && cd chartduck-mcp && pip install -e .
 ```
 
 ## Configure
