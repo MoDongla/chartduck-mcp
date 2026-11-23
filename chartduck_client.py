@@ -171,5 +171,11 @@ class ChartDuck:
 def load_mock(path=None):
     here = os.path.dirname(os.path.abspath(__file__))
     path = path or os.path.join(here, "examples", "sample_response.json")
+    if not os.path.exists(path):
+        raise ChartDuckError(
+            "invalid_input",
+            "--mock needs examples/sample_response.json; it ships with the "
+            "source repository, not the wheel",
+        )
     with open(path, encoding="utf-8") as f:
         return json.load(f)

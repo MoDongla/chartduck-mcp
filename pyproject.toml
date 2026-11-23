@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,10 +8,23 @@ version = "0.1.0"
 description = "MCP server and CLI for ChartDuck chart data extraction"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "ChartDuck"}]
+keywords = ["mcp", "model-context-protocol", "chart", "ocr", "pdf", "data-extraction"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Image Recognition",
+]
 dependencies = [
   "mcp>=1.10,<3",
 ]
+
+[project.urls]
+Homepage = "https://chartduck.com"
+Repository = "https://github.com/MoDongla/chartduck-mcp"
+Issues = "https://github.com/MoDongla/chartduck-mcp/issues"
 
 [project.scripts]
 chartduck-mcp = "mcp_server:main"
