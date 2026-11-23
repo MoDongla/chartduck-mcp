@@ -135,7 +135,7 @@ for panel in result["panels"]:
 chartduck_client.py   # REST client (stdlib urllib; the only third-party dep is `mcp`)
 mcp_server.py         # MCP server (FastMCP, stdio or streamable HTTP)
 cli.py                # command line
-docs/mcp-contract.md  # tool contract, error codes, limits (Chinese)
+docs/mcp-contract.md  # tool contract, error codes, limits (English; 中文版 mcp-contract.zh.md)
 examples/             # sample response
 ```
 
