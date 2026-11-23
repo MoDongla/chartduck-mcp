@@ -1,0 +1,27 @@
+{
+ "panels": [
+  {
+   "box": [100.0, 19.0, 474.0, 393.0],
+   "chart_type": "line",
+   "why": null,
+   "axis": {"x": [0.5, 0.8], "y": [-0.16, 0.16]},
+   "axis_labels": {
+    "x": {"text": "Baseline Fgas", "score": 0.98},
+    "y": {"text": "Change in Fgas", "score": 1.0}
+   },
+   "data": {
+    "x_units": "value",
+    "y_units": "value",
+    "series": [
+     {"kind": "line", "points": [[0.5022, -0.0007], [0.5038, -0.0007], [0.5054, -0.0007], [0.5070, -0.0007]]}
+    ]
+   }
+  }
+ ],
+ "meta": {
+  "engine_version": "1.4.0",
+  "ocr": "gpu",
+  "elapsed_ms": 2410,
+  "note": "points truncated for the example; real responses carry up to 2000 points per series"
+ }
+}
