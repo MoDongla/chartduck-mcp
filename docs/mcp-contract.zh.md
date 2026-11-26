@@ -12,6 +12,8 @@
 - REST（本仓库客户端直连）：JSON over HTTPS。
 - 鉴权头：客户端同时发 `X-Chartlab-Token`（引擎现名）与 `X-Chartduck-Token`（新名），
   服务端认哪个都行；`/health` 也要求带令牌（既有一致性行为）。
+- 打托管公网口（`https://api.chartduck.com`）时钥匙在边缘 Worker 里，客户端不需要带令牌；
+  只有指向私有引擎部署时才要。
 - 客户端不在仓库里存令牌：`CHARTDUCK_API_URL` / `CHARTDUCK_TOKEN` 环境变量。
 - 本地调试可设 `CHARTDUCK_ALLOW_HTTP=1` 放开 http。
 

@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 import sys
 import threading
 import unittest
@@ -37,6 +38,7 @@ class Handler(BaseHTTPRequestHandler):
                     token=self.headers.get("X-Chartduck-Token"),
                     legacy_token=self.headers.get("X-Chartlab-Token"),
                     ctype=self.headers.get("Content-Type"),
+                    ua=self.headers.get("User-Agent"),
                     nbytes=len(raw),
                     magic=raw[:4])
         if raw.endswith(b"FAIL"):
@@ -76,6 +78,20 @@ class ClientTest(unittest.TestCase):
         self.assertEqual(SEEN["legacy_token"], "tok-test")
         self.assertEqual(SEEN["ctype"], "image/png")
         self.assertEqual(SEEN["nbytes"], len(PNG))
+
+    def test_sends_identifying_user_agent(self):
+        """api.chartduck.com 的 WAF 会挡 urllib 默认 UA（403 / CF 1010），必须自己发。"""
+        self.client().extract_image_bytes(PNG, "a.png")
+        self.assertEqual(SEEN["ua"], cc.USER_AGENT)
+        self.assertTrue(SEEN["ua"].startswith("chartduck-mcp/"))
+
+    def test_version_matches_pyproject(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(os.path.join(root, "pyproject.toml"), encoding="utf-8") as f:
+            text = f.read()
+        m = re.search(r'^version\s*=\s*"([^"]+)"', text, re.M)
+        self.assertIsNotNone(m, "pyproject.toml 里找不到 version")
+        self.assertEqual(m.group(1), cc.__version__)
 
     def test_ctypes(self):
         self.assertEqual(cc._ctype_for(b"%PDF-1.7 x"), "application/pdf")

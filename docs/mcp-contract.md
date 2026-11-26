@@ -14,6 +14,9 @@ only the contract between the MCP client and the service.
 - Auth headers: the client sends both `X-Chartlab-Token` (the engine's current name) and
   `X-Chartduck-Token` (the new name); the server may accept either. `/health` also
   requires a token, matching existing behaviour.
+- Against the hosted public endpoint (`https://api.chartduck.com`) the edge Worker holds
+  the engine token itself, so a client token is not required there; send one only when
+  you point the client at a private engine.
 - The client never stores the token in the repository: use the `CHARTDUCK_API_URL` and
   `CHARTDUCK_TOKEN` environment variables.
 - For local debugging, set `CHARTDUCK_ALLOW_HTTP=1` to allow plain HTTP.

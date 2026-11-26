@@ -4,10 +4,12 @@ Open-source MCP server and CLI for [ChartDuck](https://chartduck.com) — chart 
 extraction from scientific figures and document pages. The extraction engine runs on
 the hosted service; this repository is the thin client (MCP + CLI + Python SDK).
 
-> **Status: pre-release.** Version 0.1.0 reserves the package name; the hosted API is
-> not publicly available yet, so the client cannot reach a live service. The contract,
-> code and error semantics below are implemented and tested against a mock and a local
-> engine.
+> **Status: pre-release (0.1.x).** The hosted API is live at
+> `https://api.chartduck.com`, so the client listed here does reach a working service.
+> It is a shared public endpoint with a daily quota and no uptime commitment — if it
+> answers `429` / `rate_limited`, wait and retry. The contract, code and error
+> semantics below are implemented and tested against a mock, a local engine and the
+> hosted endpoint.
 
 ## What it does
 
@@ -47,14 +49,14 @@ Measured on public ICPR2022-style documents (unseen distribution):
 - Axis titles are beta: x-axis content accuracy 91.7%, y-axis 76.9% — not covered by any
   support commitment.
 
-Full benchmark methodology: <https://chartduck.com/benchmarks> (site launch pending).
+Full benchmark methodology: <https://chartduck.com/#benchmarks>.
 
 ## Install
 
 Requires Python 3.10+.
 
 ```bash
-pip install chartduck-mcp          # 0.1.0: name reservation, no live API yet
+pip install chartduck-mcp          # 0.1.1: hosted API is live
 # or from source
 git clone https://github.com/MoDongla/chartduck-mcp && cd chartduck-mcp && pip install -e .
 ```
@@ -63,7 +65,7 @@ git clone https://github.com/MoDongla/chartduck-mcp && cd chartduck-mcp && pip i
 
 ```bash
 export CHARTDUCK_API_URL="https://api.chartduck.com"   # hosted service base URL
-export CHARTDUCK_TOKEN="..."                            # pilot API token
+export CHARTDUCK_TOKEN="..."                            # optional: only for a private deployment
 ```
 
 ## Use as an MCP server

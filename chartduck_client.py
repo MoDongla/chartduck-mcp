@@ -10,6 +10,13 @@ import os
 import urllib.error
 import urllib.request
 
+__version__ = "0.1.1"
+
+# 必须显式发 UA：api.chartduck.com 的 WAF 按 UA 挡 urllib 的默认值
+# （`Python-urllib/3.x` → 403 + CF error 1010，2026-11-26 实测 3/3）。
+# 与 Worker 子请求空 UA 被挡是同一类坑，解法一样：在调用侧带上身份。
+USER_AGENT = "chartduck-mcp/%s (+https://chartduck.com)" % __version__
+
 MAX_IMAGE_BYTES = 20 * 1024 * 1024
 MAX_PDF_BYTES = 100 * 1024 * 1024
 DEFAULT_TIMEOUT = 180
@@ -88,7 +95,7 @@ def _fetch(url, max_bytes, what):
     if not (url.startswith("https://") or
             (os.environ.get("CHARTDUCK_ALLOW_HTTP") == "1" and url.startswith("http://"))):
         raise ChartDuckError("invalid_input", "only https URLs are accepted: %s" % url)
-    req = urllib.request.Request(url, headers={"User-Agent": "chartduck-mcp/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with _open(req, 30) as r:
         data = r.read(max_bytes + 1)
     if len(data) > max_bytes:
@@ -105,7 +112,9 @@ class ChartDuck:
             raise ChartDuckError("invalid_input", "CHARTDUCK_API_URL is not set")
 
     def _headers(self, ctype=None):
-        h = {"Content-Type": ctype} if ctype else {}
+        h = {"User-Agent": USER_AGENT}
+        if ctype:
+            h["Content-Type"] = ctype
         if self.token:
             # 引擎现在认 X-Chartlab-Token；改名后认 X-Chartduck-Token。两个都发，
             # 服务端切换时客户端不用跟着发版。
