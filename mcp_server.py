@@ -16,9 +16,11 @@ except ImportError:           # mcp 1.x
     from mcp.server.fastmcp import FastMCP as _Server
     from mcp.server.fastmcp.exceptions import ToolError as _ToolError
 
-from chartduck_client import ChartDuck, ChartDuckError
+from chartduck_client import ChartDuck, ChartDuckError, __version__
 
-mcp = _Server("chartduck")
+# 带上版本号：MCP 客户端的 serverInfo.version 会显示它；留空的话
+# 「用户装的是哪一版」从握手里看不出来。
+mcp = _Server("chartduck", version=__version__)
 
 
 def _fail(e):
